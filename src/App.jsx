@@ -24,6 +24,7 @@ import Navbar from './components/UI/Navbar';
 import Footer from './components/UI/Footer';
 import LoadingScreen from './components/UI/LoadingScreen';
 import ScrollProgress from './components/UI/ScrollProgress';
+import ScrollTopButton from './components/UI/ScrollTopButton';
 
 // Import Theme Context
 import { ThemeProvider, useTheme } from './context/ThemeContext';
@@ -46,6 +47,11 @@ const AppContent = () => {
         document.body.style.background = isDarkMode ? '#0a0500' : '#FAF3E0';   // ✅ Light = cream beige
         document.body.style.color = isDarkMode ? '#fff8e7' : '#1a0a00';
     }, [isDarkMode]);
+
+    // Start each page at the top when navigating between routes
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+    }, [location.pathname]);
 
     return (
         <div className="app" style={{
@@ -95,20 +101,23 @@ const AppContent = () => {
                 ) : (
                     <>
                         <main>
-                            <Routes>
-                                <Route path="/" element={<HomeSection />} />
-                                <Route path="/about" element={<AboutSection />} />
-                                <Route path="/disciplines" element={<DisciplinesSection />} />
-                                <Route path="/courses" element={<CoursesSection />} />
-                                <Route path="/faculty" element={<FacultySection />} />
-                                <Route path="/events" element={<EventsSection />} />
-                                <Route path="/gallery" element={<GallerySection />} />
-                                <Route path="/contact" element={<ContactSection />} />
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/signup" element={<Signup />} />
-                            </Routes>
+                            <div className="svu-page" key={location.pathname}>
+                                <Routes>
+                                    <Route path="/" element={<HomeSection />} />
+                                    <Route path="/about" element={<AboutSection />} />
+                                    <Route path="/disciplines" element={<DisciplinesSection />} />
+                                    <Route path="/courses" element={<CoursesSection />} />
+                                    <Route path="/faculty" element={<FacultySection />} />
+                                    <Route path="/events" element={<EventsSection />} />
+                                    <Route path="/gallery" element={<GallerySection />} />
+                                    <Route path="/contact" element={<ContactSection />} />
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/signup" element={<Signup />} />
+                                </Routes>
+                            </div>
                         </main>
                         <Footer />
+                        <ScrollTopButton />
                     </>
                 )}
             </div>

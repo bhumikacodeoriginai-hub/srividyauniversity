@@ -537,3 +537,47 @@ body.dark-theme .svu-footer { background: linear-gradient(180deg, #140c07, #0b06
     .svu-auth__aside ul { display: none; }
     .svu-auth__form { padding: 2rem 1.6rem; }
 }
+
+
+/* ============================================================================
+   GLOBAL POLISH — transitions, focus, scrollbar, selection, shimmering titles
+   ============================================================================ */
+
+/* Smooth page transition on route change */
+.svu-page { animation: svuFadeUp .45s ease both; }
+
+/* Accessible focus rings */
+a:focus-visible, button:focus-visible, input:focus-visible,
+.svu-nav__link:focus-visible, .svu-chip:focus-visible, .svu-feature:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px;
+}
+
+/* Themed selection + scrollbar */
+::selection { background: var(--accent); color: #fff; }
+body.light-theme ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--gold-soft), var(--gold)); }
+body.dark-theme  ::-webkit-scrollbar { width: 10px; }
+body.dark-theme  ::-webkit-scrollbar-track { background: #140c07; }
+body.dark-theme  ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #6a4d1f, #C5A059); border-radius: 5px; }
+
+/* Give every gradient-clipped heading the same subtle gold shimmer */
+[style*="-webkit-background-clip: text"] {
+    background-size: 200% auto !important;
+    animation: svuShimmer 6.5s linear infinite;
+}
+
+/* Scroll-to-top floating button */
+.svu-totop {
+    position: fixed; right: 22px; bottom: 22px; z-index: 900;
+    width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(255,255,255,.3);
+    background: linear-gradient(135deg, var(--accent), var(--gold)); color: #fff;
+    font-size: 1.4rem; cursor: pointer; box-shadow: var(--shadow-lg);
+    display: grid; place-items: center;
+    opacity: 0; visibility: hidden; transform: translateY(16px) scale(.9);
+    transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+}
+.svu-totop.is-show { opacity: 1; visibility: visible; transform: none; }
+.svu-totop:hover { filter: brightness(1.07); transform: translateY(-3px); }
+@media (max-width: 560px) { .svu-totop { right: 14px; bottom: 14px; width: 46px; height: 46px; } }
+
+/* Slightly tighter section headers on the inline-styled sections */
+section > div > div[style*="text-align"] { margin-bottom: 2.4rem !important; }
