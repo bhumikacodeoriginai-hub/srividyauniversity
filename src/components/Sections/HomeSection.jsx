@@ -39,6 +39,22 @@ const HomeSection = () => {
 
     const handleApplyNow = () => window.open(GOOGLE_FORM_URL, '_blank');
 
+    const disciplines = [
+        { name: 'Veda', icon: '📖', sub: 'Sacred scriptures' },
+        { name: 'Agama', icon: '🏛️', sub: 'Temple traditions' },
+        { name: 'Jyothisha', icon: '✨', sub: 'Vedic astronomy' },
+        { name: 'Music', icon: '🎵', sub: 'Classical sangeetha' },
+        { name: 'Dance', icon: '💃', sub: 'Performing arts' },
+        { name: 'Yogic Science', icon: '🧘', sub: 'Body, mind & spirit' }
+    ];
+
+    const whyUs = [
+        { icon: '🎓', title: 'Accredited Degrees', text: 'Recognised Diploma, Bachelor\u2019s, Master\u2019s and Doctoral programmes in traditional Shastras.' },
+        { icon: '📜', title: 'Eminent Scholars', text: 'Learn from distinguished vidwans and professors with decades of experience.' },
+        { icon: '🌍', title: 'Global Community', text: 'Centres in the USA and India, welcoming students from across the world.' },
+        { icon: '🪔', title: 'Authentic Tradition', text: 'Faithful to the Vedic worldview while adapting to a modern context.' }
+    ];
+
     // Real photographs from the University (public/images)
     const slides = [
         { src: '/images/IMG-20230609-WA0016.jpg', title: 'Convocation 2023', subtitle: 'Celebrating our doctoral graduates' },
@@ -171,6 +187,72 @@ const HomeSection = () => {
                         <h3>Contact</h3>
                         <p><strong style={{ color: 'var(--heading)' }}>Website:</strong> srividyauniversity.com</p>
                         <p><strong style={{ color: 'var(--heading)' }}>Email:</strong> info@srividyauniversity.com</p>
+                    </div>
+                </div>
+
+                {/* Disciplines highlight */}
+                <div className="svu-block">
+                    <div className="svu-head" data-aos="fade-up">
+                        <span className="svu-eyebrow">॥ शास्त्राणि ॥</span>
+                        <h2 className="svu-title">Our Disciplines</h2>
+                        <div className="svu-divider"><span className="svu-divider__mark">❁</span></div>
+                        <p className="svu-subtitle">Timeless traditions taught by eminent scholars</p>
+                    </div>
+                    <div className="svu-feature-grid" data-aos="fade-up">
+                        {disciplines.map((d) => (
+                            <div key={d.name} className="svu-feature" onClick={() => navigate('/disciplines')} role="button" tabIndex={0}
+                                onKeyDown={(e) => { if (e.key === 'Enter') navigate('/disciplines'); }}>
+                                <span className="svu-feature__icon">{d.icon}</span>
+                                <div className="svu-feature__title">{d.name}</div>
+                                <div className="svu-feature__sub">{d.sub}</div>
+                            </div>
+                        ))}
+                    </div>
+                    <div style={{ textAlign: 'center', marginTop: '1.8rem' }}>
+                        <button className="svu-btn svu-btn--outline" onClick={() => navigate('/disciplines')}>Explore All Disciplines</button>
+                    </div>
+                </div>
+
+                {/* Why Srividya */}
+                <div className="svu-block">
+                    <div className="svu-head" data-aos="fade-up">
+                        <span className="svu-eyebrow">॥ किमर्थम् ॥</span>
+                        <h2 className="svu-title">Why Srividya</h2>
+                        <div className="svu-divider"><span className="svu-divider__mark">❁</span></div>
+                        <p className="svu-subtitle">Where ancient wisdom meets modern education</p>
+                    </div>
+                    <div className="svu-why-grid" data-aos="fade-up">
+                        {whyUs.map((w) => (
+                            <div key={w.title} className="svu-why">
+                                <div className="svu-why__icon">{w.icon}</div>
+                                <h3>{w.title}</h3>
+                                <p>{w.text}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Convocation announcement */}
+                <div className="svu-block">
+                    <div className="svu-announce" data-aos="fade-up">
+                        <div className="svu-announce__badge">11 APR<br /><small>2026</small></div>
+                        <div>
+                            <h3>Convocation 2026</h3>
+                            <p>Srividya International University for Vedic Science will conduct its 2026 convocation on 11 April 2026.
+                                Students eligible to receive their degrees may contact their respective departments.</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Call to action */}
+                <div className="svu-cta-band" data-aos="zoom-in">
+                    <span className="svu-hero__om">ॐ</span>
+                    <h2>Begin your journey in Vedic learning</h2>
+                    <p>Join a community devoted to preserving India&rsquo;s traditional knowledge. Applications for our
+                        Diploma, Bachelor&rsquo;s, Master&rsquo;s and Doctoral programmes are open.</p>
+                    <div className="svu-cta-band__actions">
+                        <button className="svu-btn svu-btn--primary" onClick={handleApplyNow}>Apply Now</button>
+                        <button className="svu-btn svu-btn--outline" onClick={() => navigate('/contact')}>Contact Admissions</button>
                     </div>
                 </div>
             </div>
