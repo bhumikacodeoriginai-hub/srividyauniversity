@@ -1,0 +1,25 @@
+{
+  "name": "srividya-university",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.158.0",
+    "@react-three/fiber": "^8.15.12",
+    "@react-three/drei": "^9.88.12",
+    "@react-three/postprocessing": "^2.15.10",
+    "aos": "^2.3.4",
+    "react-router-dom": "^6.15.0",
+    "react-icons": "^4.11.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.3",
+    "vite": "^4.4.5"
+  }
+}

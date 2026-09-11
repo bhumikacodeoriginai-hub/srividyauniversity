@@ -1,0 +1,360 @@
+@import './variables.css';
+@import './headings.css';
+@import './animations.css';
+
+* {
+    font-family: 'Times New Roman', Times, serif !important;
+    font-style: normal !important;
+}
+
+.app {
+    position: relative;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0500 100%);
+}
+
+.three-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.three-container canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: auto;
+}
+
+.ui-overlay {
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.ui-overlay>* {
+    pointer-events: auto;
+}
+
+.section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--section-padding);
+    position: relative;
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg,
+            rgba(10, 5, 0, 0.7) 0%,
+            rgba(10, 5, 0, 0.3) 50%,
+            rgba(10, 5, 0, 0.7) 100%);
+    z-index: -1;
+}
+
+.section-content {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    width: 100%;
+}
+
+.section-header .sanskrit-title {
+    font-family: 'Tiro Devanagari Sanskrit', serif;
+    font-size: 1.8rem;
+    color: var(--saffron);
+    display: block;
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+
+.section-header h2 {
+    font-family: "'Times New Roman', Times, serif";
+    font-size: 3.5rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.section-header p {
+    color: rgba(255, 248, 231, 0.7);
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: "'Times New Roman', Times, serif";
+}
+
+.scene-container {
+    width: 100%;
+    height: 500px;
+    min-height: 400px;
+    position: relative;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: rgba(10, 5, 0, 0.3);
+    border: 1px solid rgba(197, 160, 89, 0.1);
+}
+
+.scene-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.scene-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 300px;
+    color: rgba(255, 248, 231, 0.5);
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    font-family: "'Times New Roman', Times, serif";
+}
+
+@media (max-width: 768px) {
+    .section-header h2 {
+        font-size: 2.2rem;
+    }
+
+    .section {
+        padding: 80px 1rem 40px;
+    }
+
+    .scene-container {
+        height: 350px;
+        min-height: 300px;
+    }
+}
+
+/* ========================================
+   LIGHT THEME COLORS — CREAM BEIGE
+   ======================================== */
+
+.light-theme {
+    background: #FAF3E0 !important;
+    color: #1a0a00 !important;
+}
+
+.light-theme .app {
+    background: radial-gradient(ellipse at center, #FAF3E0, #EFE6D0) !important;
+}
+
+.light-theme .section {
+    background: rgba(250, 243, 224, 0.5) !important;
+}
+
+.light-theme .section::before {
+    background: linear-gradient(180deg,
+            rgba(250, 243, 224, 0.7) 0%,
+            rgba(250, 243, 224, 0.3) 50%,
+            rgba(250, 243, 224, 0.7) 100%) !important;
+}
+
+.light-theme .section-header p {
+    color: rgba(26, 10, 0, 0.7) !important;
+}
+
+.light-theme .scene-container {
+    background: rgba(250, 243, 224, 0.6) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.light-theme .scene-loading {
+    color: rgba(26, 10, 0, 0.5) !important;
+}
+
+.light-theme .card,
+.light-theme .section-content>div {
+    background: rgba(250, 243, 224, 0.6) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.light-theme .border-gold {
+    border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+.light-theme .btn-secondary {
+    color: #1a0a00 !important;
+    border-color: #8B6914 !important;
+}
+
+.light-theme .btn-secondary:hover {
+    background: #8B6914 !important;
+    color: white !important;
+}
+
+.light-theme input,
+.light-theme textarea,
+.light-theme select {
+    background: rgba(250, 243, 224, 0.8) !important;
+    color: #1a0a00 !important;
+    border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.light-theme input::placeholder,
+.light-theme textarea::placeholder {
+    color: #6a5a4a !important;
+}
+
+.light-theme a {
+    color: #8B6914 !important;
+}
+
+.light-theme a:hover {
+    color: #C5A059 !important;
+}
+
+.light-theme table {
+    color: #1a0a00 !important;
+}
+
+.light-theme table th {
+    color: #1a0a00 !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.light-theme table td {
+    color: #1a0a00 !important;
+}
+
+.light-theme table tr {
+    border-bottom-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.light-theme .stat-item .stat-number {
+    color: #8B6914 !important;
+}
+
+.light-theme .stat-item .stat-label {
+    color: #4a3a2a !important;
+}
+
+.light-theme .hero-title .sub-title {
+    -webkit-text-fill-color: #1a0a00 !important;
+}
+
+.light-theme .hero-description {
+    color: #1a0a00 !important;
+}
+
+.light-theme .hero-badge {
+    color: #8B6914 !important;
+    border-color: rgba(0, 0, 0, 0.15) !important;
+    background: rgba(250, 243, 224, 0.8) !important;
+}
+
+.light-theme .dashboard-heading {
+    color: #8B6914 !important;
+    -webkit-text-fill-color: #8B6914 !important;
+}
+
+.light-theme .dashboard-heading::before {
+    background: linear-gradient(180deg, #8B6914, #C5A059) !important;
+}
+
+.light-theme .sidebar {
+    background: rgba(250, 243, 224, 0.95) !important;
+    border-right-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.light-theme .sidebar .menu-item {
+    color: #1a0a00 !important;
+}
+
+.light-theme .sidebar .menu-item:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.light-theme .sidebar .menu-item.active {
+    background: rgba(0, 0, 0, 0.08) !important;
+    color: #8B6914 !important;
+}
+
+.light-theme footer {
+    background: rgba(250, 243, 224, 0.9) !important;
+    border-top-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.light-theme footer p {
+    color: #1a0a00 !important;
+}
+
+.light-theme .text-muted {
+    color: #4a3a2a !important;
+}
+
+.light-theme .text-light {
+    color: #6a5a4a !important;
+}
+
+/* ========================================
+   LIGHT THEME — TEXT VISIBILITY FIX
+   ======================================== */
+
+/* Force ALL text to be dark in light mode */
+.light-theme p,
+.light-theme span,
+.light-theme h1,
+.light-theme h2,
+.light-theme h3,
+.light-theme h4,
+.light-theme h5,
+.light-theme h6,
+.light-theme div,
+.light-theme li,
+.light-theme td,
+.light-theme th,
+.light-theme label,
+.light-theme strong,
+.light-theme b,
+.light-theme em,
+.light-theme i {
+    color: #1a0a00;
+}
+
+/* Except gold/saffron headings which should remain gold */
+.light-theme .gold-text,
+.light-theme .text-gold,
+.light-theme .dashboard-heading,
+.light-theme .stat-item .stat-number {
+    color: #8B6914 !important;
+    -webkit-text-fill-color: #8B6914 !important;
+}
+
+/* Course cards in light mode */
+.light-theme [class*="course"],
+.light-theme [class*="Course"] {
+    color: #1a0a00 !important;
+}
+
+/* Override cream/white inline colors */
+.light-theme [style*="color: rgba(255,248,231"],
+.light-theme [style*="color: rgba(255, 248, 231"],
+.light-theme [style*="color: rgb(255,248,231"],
+.light-theme [style*="color: rgb(255, 248, 231"] {
+    color: #1a0a00 !important;
+}

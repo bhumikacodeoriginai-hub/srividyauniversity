@@ -1,0 +1,23 @@
+:root {
+    --saffron: #FF9933;
+    --gold: #C5A059;
+    --vermilion: #E34234;
+    --cream: #FFF8E7;
+    --dark-brown: #3D1F00;
+    --turquoise: #40E0D0;
+    --purple: #9B59B6;
+    --green: #2ECC71;
+
+    --gradient-primary: linear-gradient(135deg, #FF9933, #C5A059);
+    --gradient-dark: linear-gradient(135deg, #1a0a00, #0a0500);
+
+    --font-primary: 'Times New Roman', Times, serif;
+    --font-sanskrit: 'Tiro Devanagari Sanskrit', serif;
+    --font-kalam: 'Times New Roman', Times, serif;  /* alias kept for legacy refs */
+    --font-body: 'Times New Roman', Times, serif;
+
+    --section-padding: 120px 2rem 80px;
+    --container-max: 1200px;
+    --radius-card: 20px;
+    --radius-button: 50px;
+}
