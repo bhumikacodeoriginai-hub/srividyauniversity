@@ -28,9 +28,6 @@ const HomeSection = () => {
     const nextSlide = () => setCurrentSlide((p) => (p + 1) % slides.length);
     const prevSlide = () => setCurrentSlide((p) => (p - 1 + slides.length) % slides.length);
 
-    const ink = '#2A1A10';
-    const inkSoft = '#5C4634';
-
     return (
         <section id="home" className="svu-hero">
             <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
@@ -46,28 +43,18 @@ const HomeSection = () => {
                 <div className="svu-hero__grid">
                     {/* Left column */}
                     <div data-aos="fade-right">
-                        <div style={{
-                            display: 'inline-flex', alignItems: 'center', gap: '.5rem',
-                            background: 'rgba(122,31,31,.08)', border: '1px solid rgba(122,31,31,.25)',
-                            padding: '.45rem 1.2rem', borderRadius: '50px', fontSize: '.95rem',
-                            color: '#7A1F1F', fontWeight: 600, marginBottom: '1rem'
-                        }}>
-                            &#10022; Accredited Higher Education Institution
-                        </div>
+                        <div className="svu-badge">&#10022; Accredited Higher Education Institution</div>
 
                         <h1 style={{ lineHeight: 1.15, margin: 0 }}>
-                            <span style={{ fontFamily: 'Tiro Devanagari Sanskrit, serif', fontSize: '1.8rem', color: '#E4802A', display: 'block' }}>श्रीविद्या</span>
-                            <span style={{ fontSize: '3.8rem', color: '#7A1F1F', display: 'block', fontWeight: 800 }}>Srividya</span>
-                            <span style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: '1.05rem', color: inkSoft, display: 'block', fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase' }}>
-                                International University for Vedic Science
-                            </span>
+                            <span className="svu-hero__sanskrit">श्रीविद्या</span>
+                            <span className="svu-hero__name">Srividya</span>
+                            <span className="svu-hero__tag">International University for Vedic Science</span>
                         </h1>
 
-                        <p style={{ fontSize: '1.08rem', color: ink, lineHeight: 1.85, marginTop: '1.5rem' }}>
+                        <p className="svu-hero__lead">
                             Srividya International University for Vedic Science is an accredited higher education institution in
-                            <span style={{ color: '#7A1F1F', fontWeight: 700 }}> Florida, USA</span>, specialising in Vedic&ndash;Sanskrit
-                            studies and traditional Shastras — with a decade of academic history, three convocations and over
-                            twenty-five doctoral graduates.
+                            <strong> Florida, USA</strong>, specialising in Vedic&ndash;Sanskrit studies and traditional Shastras —
+                            with a decade of academic history, three convocations and over twenty-five doctoral graduates.
                         </p>
 
                         {/* Stats */}
@@ -152,8 +139,8 @@ const HomeSection = () => {
                     </div>
                     <div className="svu-card">
                         <h3>Contact</h3>
-                        <p><strong style={{ color: '#7A1F1F' }}>Website:</strong> srividyauniversity.com</p>
-                        <p><strong style={{ color: '#7A1F1F' }}>Email:</strong> info@srividyauniversity.com</p>
+                        <p><strong style={{ color: 'var(--heading)' }}>Website:</strong> srividyauniversity.com</p>
+                        <p><strong style={{ color: 'var(--heading)' }}>Email:</strong> info@srividyauniversity.com</p>
                     </div>
                 </div>
             </div>

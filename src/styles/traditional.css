@@ -1,216 +1,287 @@
 /* ============================================================================
    TRADITIONAL THEME LAYER — Srividya International University for Vedic Science
-   Loaded last so it refines the existing styles: elegant typography, a warm
-   readable palette, polished buttons/cards, and full responsiveness.
+   Loaded last. Drives the whole design through theme-aware CSS variables so
+   BOTH light and dark themes are attractive with always-readable text.
    ============================================================================ */
+
+/* ---- Theme tokens -------------------------------------------------------- */
+:root, body.light-theme {
+    --bg: #FBF6EA;
+    --bg-grad:
+        radial-gradient(circle at 12% -5%, rgba(228,128,42,.10), transparent 40%),
+        radial-gradient(circle at 88% 8%, rgba(122,31,31,.08), transparent 42%),
+        #FBF6EA;
+    --surface: #FFFDF7;
+    --surface-2: #F6EEDD;
+    --text: #2A1A10;
+    --text-soft: #5C4634;
+    --heading: #7A1F1F;      /* deep maroon */
+    --accent: #E4802A;       /* saffron */
+    --accent-2: #FF9933;
+    --gold: #B8860B;
+    --gold-soft: #C5A059;
+    --border: #E7DCC4;
+    --shadow: 0 10px 30px rgba(94, 22, 22, 0.10);
+    --shadow-lg: 0 22px 50px rgba(94, 22, 22, 0.18);
+    --nav-bg: rgba(251, 246, 234, 0.92);
+    --pill-bg: rgba(122,31,31,.06);
+}
+
+body.dark-theme {
+    --bg: #0e0805;
+    --bg-grad: radial-gradient(ellipse at 50% -10%, #241610 0%, #140c07 55%, #0b0603 100%);
+    --surface: #1b120b;
+    --surface-2: #241811;
+    --text: #F4E9D6;
+    --text-soft: #CDB994;
+    --heading: #EBB65C;      /* warm gold reads well on dark */
+    --accent: #FF9933;
+    --accent-2: #FFB44D;
+    --gold: #C5A059;
+    --gold-soft: #D9BE86;
+    --border: rgba(197, 160, 89, 0.24);
+    --shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 24px 55px rgba(0, 0, 0, 0.55);
+    --nav-bg: rgba(16, 9, 5, 0.86);
+    --pill-bg: rgba(255, 153, 51, 0.10);
+}
 
 /* ---- Typography ---------------------------------------------------------- */
 body {
     font-family: var(--font-body) !important;
-    background: var(--cream);
-    color: var(--ink);
     font-size: 18px;
     line-height: 1.75;
+    color: var(--text);
+    background: var(--bg-grad) fixed;
 }
+body.light-theme, body.dark-theme { background: var(--bg-grad) fixed !important; }
 
-/* Elegant display serif for headings (overrides the global Times !important) */
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4,
-.section-header h2,
-.section-title-om,
-.hero-title-main,
-.dashboard-heading,
-.card-heading {
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4,
+.section-header h2, .section-title-om, .hero-title-main, .dashboard-heading, .card-heading {
     font-family: var(--font-display) !important;
     font-style: normal !important;
 }
-
-/* Sanskrit accents keep the Devanagari face */
-.sanskrit-title, .heading-sanskrit::before,
-[style*="Tiro Devanagari"] {
-    font-family: var(--font-sanskrit) !important;
-}
-
-/* ---- Warm paper background with a subtle traditional texture ------------- */
-body.light-theme,
-.light-theme .app {
-    background:
-        radial-gradient(circle at 15% 0%, rgba(228, 128, 42, 0.06), transparent 40%),
-        radial-gradient(circle at 85% 10%, rgba(122, 31, 31, 0.05), transparent 42%),
-        var(--cream) !important;
-}
+.sanskrit-title, [style*="Tiro Devanagari"] { font-family: var(--font-sanskrit) !important; }
 
 /* ============================================================================
-   READABILITY FIX
-   Many sections hard-code cream / near-white text (rgba(255,248,231,..) and
-   #fff8e7) meant for a dark background. On the light theme that text is nearly
-   invisible. These rules force such text back to the warm dark ink — covering
-   both the spaced and un-spaced forms the browser may serialise.
+   READABILITY FIX — force hard-coded cream / near-white inline text to the
+   theme's readable ink in LIGHT mode (invisible-text bug). Dark mode keeps its
+   own light inline colours, which are already readable on the dark background.
    ============================================================================ */
 .light-theme [style*="rgba(255, 248, 231"],
 .light-theme [style*="rgba(255,248,231"],
-.light-theme [style*="rgba(255, 255, 255"] span,
 .light-theme [style*="#fff8e7"],
 .light-theme [style*="#FFF8E7"] {
-    color: var(--ink) !important;
-    -webkit-text-fill-color: var(--ink) !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
 }
+/* Text that genuinely sits on a dark overlay/panel stays light in both themes */
+.svu-on-dark, .svu-on-dark * { color: #fff !important; -webkit-text-fill-color: #fff !important; }
 
-/* Keep text that genuinely sits on dark overlays (image captions, gradient
-   buttons) light — those use pure white or live inside these wrappers. */
-.svu-on-dark, .svu-on-dark * ,
-[style*="linear-gradient(to top, rgba(0,0,0"] * {
-    color: #fff !important;
-    -webkit-text-fill-color: #fff !important;
-}
+/* ---- Section rhythm & headers ------------------------------------------- */
+.section, section { min-height: auto; }
+.section-header p { font-size: 1.15rem; color: var(--text-soft) !important; }
 
-/* ---- Section rhythm ------------------------------------------------------ */
-.section, section {
-    min-height: auto;
+.svu-eyebrow {
+    font-family: var(--font-sanskrit); color: var(--accent);
+    font-size: 1.7rem; display: block; margin-bottom: .4rem;
 }
-.section-header p {
-    font-size: 1.15rem;
-    color: var(--ink-soft) !important;
+.svu-title {
+    font-family: var(--font-display) !important; font-weight: 700;
+    font-size: clamp(2.1rem, 5vw, 3.3rem);
+    background: linear-gradient(135deg, var(--accent), var(--gold-soft));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    margin: 0;
 }
+.svu-subtitle { color: var(--text-soft); font-size: 1.15rem; margin-top: .3rem; }
 
-/* ---- Buttons (shared, traditional) --------------------------------------- */
+/* ---- Buttons ------------------------------------------------------------- */
 .svu-btn {
     display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-    padding: 0.85rem 2rem; border-radius: var(--radius-button); cursor: pointer;
+    padding: .85rem 2rem; border-radius: var(--radius-button); cursor: pointer;
     font-family: var(--font-primary) !important; font-size: 1.05rem; font-weight: 600;
     letter-spacing: .3px; text-decoration: none; border: 2px solid transparent;
     transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
 }
 .svu-btn:hover { transform: translateY(-2px); }
-.svu-btn--primary { background: var(--gradient-primary); color: #fff; box-shadow: 0 8px 20px rgba(228,128,42,.28); }
-.svu-btn--primary:hover { box-shadow: 0 12px 26px rgba(228,128,42,.38); }
-.svu-btn--maroon { background: var(--gradient-maroon); color: #fff; box-shadow: 0 8px 20px rgba(122,31,31,.25); }
-.svu-btn--outline { background: transparent; color: var(--maroon); border-color: var(--maroon); }
-.svu-btn--outline:hover { background: var(--maroon); color: #fff; }
+.svu-btn--primary { background: linear-gradient(135deg, var(--accent), var(--gold)); color: #fff; box-shadow: 0 8px 20px rgba(228,128,42,.30); }
+.svu-btn--outline { background: transparent; color: var(--heading); border-color: currentColor; }
+.svu-btn--outline:hover { background: var(--heading); color: #fff; }
 
 /* ---- Cards --------------------------------------------------------------- */
 .svu-card {
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card);
-    padding: 1.6rem;
-    transition: transform .2s ease, box-shadow .2s ease;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-card); box-shadow: var(--shadow); padding: 1.6rem;
+    color: var(--text); transition: transform .2s ease, box-shadow .2s ease;
 }
-.svu-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+.svu-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.svu-card h3 { color: var(--heading) !important; -webkit-text-fill-color: var(--heading) !important; font-size: 1.2rem; margin-bottom: .5rem; }
+.svu-card p { color: var(--text-soft); margin: .15rem 0; }
 
-/* ---- Decorative divider (Om / lotus rule) -------------------------------- */
-.svu-divider {
-    display: flex; align-items: center; justify-content: center; gap: 1rem;
-    margin: 1.2rem 0; color: var(--gold);
-}
+/* ---- Decorative divider -------------------------------------------------- */
+.svu-divider { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1.2rem 0; }
 .svu-divider::before, .svu-divider::after {
-    content: ""; height: 1px; width: min(120px, 22vw);
+    content: ""; height: 1px; width: min(140px, 24vw);
     background: linear-gradient(90deg, transparent, var(--gold-soft));
 }
 .svu-divider::after { background: linear-gradient(90deg, var(--gold-soft), transparent); }
-.svu-divider__mark { font-family: var(--font-sanskrit); font-size: 1.5rem; color: var(--saffron); }
+.svu-divider__mark { font-family: var(--font-sanskrit); font-size: 1.5rem; color: var(--accent); }
 
 /* ============================================================================
-   NAVBAR (traditional, responsive)  — classes used by Navbar.jsx
+   NAVBAR (traditional, responsive)
    ============================================================================ */
 .svu-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 1rem; padding: .7rem 2rem;
-    background: rgba(251, 246, 234, 0.92);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
-    box-shadow: 0 2px 14px rgba(42,26,16,.06);
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: .7rem 2rem; background: var(--nav-bg); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border); box-shadow: 0 2px 14px rgba(0,0,0,.06);
     transition: padding .25s ease, box-shadow .25s ease;
 }
-.svu-nav--scrolled { padding: .45rem 2rem; box-shadow: 0 4px 18px rgba(42,26,16,.12); }
+.svu-nav--scrolled { padding: .45rem 2rem; box-shadow: var(--shadow); }
 .svu-nav__brand { display: flex; align-items: center; gap: .7rem; text-decoration: none; }
-.svu-nav__brand img { width: 46px; height: 46px; object-fit: contain; }
-.svu-nav__title { font-family: var(--font-display) !important; color: var(--maroon); font-size: 1.35rem; font-weight: 700; line-height: 1.05; margin: 0; }
-.svu-nav__sub { font-family: var(--font-primary); color: var(--gold); font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; display: block; }
+.svu-nav__brand img { width: 46px; height: 46px; object-fit: contain; border-radius: 8px; }
+.svu-nav__title { font-family: var(--font-display) !important; color: var(--heading); font-size: 1.35rem; font-weight: 700; line-height: 1.05; margin: 0; }
+.svu-nav__sub { font-family: var(--font-primary); color: var(--gold); font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; display: block; }
 
 .svu-nav__links { display: flex; align-items: center; gap: 1.15rem; }
 .svu-nav__link {
     font-family: var(--font-primary) !important; font-size: 1rem; font-weight: 600;
-    color: var(--ink-soft); text-decoration: none; padding: 4px 2px;
+    color: var(--text-soft); text-decoration: none; padding: 4px 2px;
     border-bottom: 2px solid transparent; transition: color .2s ease, border-color .2s ease;
 }
-.svu-nav__link:hover { color: var(--maroon); }
-.svu-nav__link.is-active { color: var(--maroon); border-bottom-color: var(--saffron); }
+.svu-nav__link:hover { color: var(--heading); }
+.svu-nav__link.is-active { color: var(--heading); border-bottom-color: var(--accent); }
 
 .svu-nav__actions { display: flex; align-items: center; gap: .7rem; }
-.svu-nav__btn { font-family: var(--font-primary) !important; font-size: .95rem; font-weight: 700; padding: .45rem 1.15rem; border-radius: 50px; text-decoration: none; white-space: nowrap; }
-.svu-nav__btn--outline { border: 2px solid var(--maroon); color: var(--maroon); }
-.svu-nav__btn--outline:hover { background: var(--maroon); color: #fff; }
-.svu-nav__btn--solid { background: var(--gradient-primary); color: #fff; border: 2px solid transparent; }
-.svu-nav__btn--solid:hover { filter: brightness(1.05); }
+.svu-nav__btn { font-family: var(--font-primary) !important; font-size: .95rem; font-weight: 700; padding: .45rem 1.15rem; border-radius: 50px; text-decoration: none; white-space: nowrap; transition: all .2s ease; }
+.svu-nav__btn--outline { border: 2px solid var(--heading); color: var(--heading); }
+.svu-nav__btn--outline:hover { background: var(--heading); color: #fff; }
+.svu-nav__btn--solid { background: linear-gradient(135deg, var(--accent), var(--gold)); color: #fff; border: 2px solid transparent; }
+.svu-nav__btn--solid:hover { filter: brightness(1.06); }
 
 .svu-nav__toggle {
-    display: none; width: 46px; height: 46px; border: 1px solid var(--line);
-    background: var(--paper); border-radius: 12px; cursor: pointer;
-    align-items: center; justify-content: center; color: var(--maroon);
+    display: none; width: 46px; height: 46px; border: 1px solid var(--border);
+    background: var(--surface); border-radius: 12px; cursor: pointer;
+    align-items: center; justify-content: center; color: var(--heading);
 }
 .svu-nav__toggle svg { width: 26px; height: 26px; }
 
-/* Mobile: collapse links into a slide-down panel */
 @media (max-width: 960px) {
     .svu-nav { padding: .6rem 1.1rem; }
-    .svu-nav--scrolled { padding: .5rem 1.1rem; }
     .svu-nav__toggle { display: inline-flex; }
     .svu-nav__menu {
-        position: fixed; top: 66px; left: 0; right: 0;
-        background: var(--paper); border-bottom: 1px solid var(--line);
-        box-shadow: 0 16px 30px rgba(42,26,16,.16);
-        flex-direction: column; align-items: stretch; gap: 0;
-        padding: .5rem 1.1rem 1.2rem;
+        position: fixed; top: 66px; left: 0; right: 0; background: var(--surface);
+        border-bottom: 1px solid var(--border); box-shadow: var(--shadow-lg);
+        flex-direction: column; align-items: stretch; gap: 0; padding: .5rem 1.1rem 1.2rem;
         max-height: calc(100vh - 66px); overflow-y: auto;
         transform: translateY(-130%); transition: transform .3s ease; visibility: hidden;
     }
     .svu-nav__menu.is-open { transform: translateY(0); visibility: visible; }
     .svu-nav__links { flex-direction: column; align-items: stretch; gap: 0; }
-    .svu-nav__link { padding: .9rem .3rem; border-bottom: 1px solid var(--line); }
-    .svu-nav__link.is-active { border-bottom-color: var(--line); background: rgba(228,128,42,.08); border-radius: 8px; }
+    .svu-nav__link { padding: .9rem .3rem; border-bottom: 1px solid var(--border); }
+    .svu-nav__link.is-active { background: var(--pill-bg); border-radius: 8px; border-bottom-color: var(--border); }
     .svu-nav__actions { margin-top: 1rem; }
     .svu-nav__btn { flex: 1; text-align: center; padding: .7rem 1rem; }
 }
-
-/* On desktop the mobile menu wrapper is just a flex container */
-@media (min-width: 961px) {
-    .svu-nav__menu { display: flex; align-items: center; gap: 1.4rem; }
-}
+@media (min-width: 961px) { .svu-nav__menu { display: flex; align-items: center; gap: 1.4rem; } }
 
 /* ============================================================================
-   HERO layout helpers (used by HomeSection.jsx)
+   HERO
    ============================================================================ */
 .svu-hero { padding: 120px 2rem 70px; }
 .svu-hero__tagline {
     text-align: center; font-family: var(--font-display) !important; font-style: italic;
-    color: var(--maroon); font-size: 1.4rem; margin: .5rem auto 2.2rem; max-width: 60ch;
+    color: var(--heading); font-size: clamp(1.1rem, 2.6vw, 1.5rem); margin: .5rem auto 1rem; max-width: 62ch;
+}
+.svu-badge {
+    display: inline-flex; align-items: center; gap: .5rem; background: var(--pill-bg);
+    border: 1px solid color-mix(in srgb, var(--heading) 35%, transparent);
+    padding: .45rem 1.2rem; border-radius: 50px; font-size: .95rem; color: var(--heading);
+    font-weight: 600; margin-bottom: 1rem;
 }
 .svu-hero__grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 3rem; align-items: center; }
+.svu-hero__sanskrit { font-family: var(--font-sanskrit) !important; font-size: 1.9rem; color: var(--accent); display: block; }
+.svu-hero__name { font-size: clamp(2.6rem, 6vw, 3.9rem); color: var(--heading) !important; -webkit-text-fill-color: var(--heading) !important; display: block; font-weight: 800; line-height: 1.05; }
+.svu-hero__tag { font-family: var(--font-primary); font-size: 1.05rem; color: var(--text-soft); display: block; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; }
+.svu-hero__lead { font-size: 1.08rem; color: var(--text); line-height: 1.85; margin-top: 1.4rem; }
+.svu-hero__lead strong { color: var(--heading); }
+
 .svu-hero__emblem {
-    background: var(--gradient-maroon); color: #fff; border-radius: 20px; padding: 2.4rem;
-    text-align: center; box-shadow: var(--shadow-soft); position: relative; overflow: hidden;
-    border: 1px solid rgba(197,160,89,.35);
+    background: linear-gradient(150deg, #7A1F1F, #4d1111); color: #fff; border-radius: 20px;
+    padding: 2.6rem 2.2rem; text-align: center; box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden; border: 1px solid rgba(197,160,89,.4);
 }
-.svu-hero__emblem::after {
-    content: ""; position: absolute; inset: 0; opacity: .1;
-    background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 22px 22px;
-}
-.svu-hero__om { font-family: var(--font-sanskrit); font-size: 4.5rem; color: var(--saffron-bright); display: block; position: relative; }
-.svu-hero__emblem h3 { color: #fff !important; font-size: 1.5rem; margin: .4rem 0; position: relative; }
-.svu-hero__emblem p { color: rgba(255,255,255,.85) !important; font-style: italic; position: relative; margin: 0; }
+.svu-hero__emblem::after { content: ""; position: absolute; inset: 0; opacity: .1; background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 22px 22px; }
+.svu-hero__om { font-family: var(--font-sanskrit); font-size: 4.6rem; color: var(--accent-2); display: block; position: relative; text-shadow: 0 0 26px rgba(255,153,51,.5); }
+.svu-hero__emblem h3 { color: #fff !important; -webkit-text-fill-color: #fff !important; font-size: 1.5rem; margin: .4rem 0; position: relative; }
+.svu-hero__emblem p { color: rgba(255,255,255,.9) !important; font-style: italic; position: relative; margin: 0; }
 
-.svu-stats { display: flex; gap: 1.5rem; padding: 1.4rem 1.6rem; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-card); margin-top: 1.8rem; }
-.svu-stats__num { font-family: var(--font-display) !important; font-size: 2rem; font-weight: 700; color: var(--maroon); }
-.svu-stats__label { font-size: .85rem; color: var(--ink-soft); letter-spacing: .04em; }
-.svu-stats__sep { width: 1px; background: var(--line); }
-
+.svu-stats { display: flex; gap: 1.5rem; padding: 1.4rem 1.6rem; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow); margin-top: 1.8rem; }
+.svu-stats__num { font-family: var(--font-display) !important; font-size: 2rem; font-weight: 700; color: var(--heading); }
+.svu-stats__label { font-size: .85rem; color: var(--text-soft); }
+.svu-stats__sep { width: 1px; background: var(--border); }
 .svu-hero__actions { display: flex; gap: 1rem; margin-top: 1.8rem; flex-wrap: wrap; }
 .svu-cards-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.4rem; margin-top: 2.6rem; }
-.svu-cards-3 h3 { color: var(--maroon) !important; font-size: 1.2rem; margin-bottom: .5rem; }
-.svu-cards-3 p { color: var(--ink-soft); margin: .15rem 0; font-size: .98rem; }
+
+/* ============================================================================
+   GALLERY
+   ============================================================================ */
+.svu-gallery__filters { display: flex; gap: .7rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2.2rem; }
+.svu-chip {
+    padding: .5rem 1.4rem; border-radius: 50px; border: 2px solid var(--border);
+    background: var(--surface); color: var(--text-soft); cursor: pointer;
+    font-family: var(--font-primary) !important; font-size: .95rem; font-weight: 600;
+    transition: all .2s ease;
+}
+.svu-chip:hover { border-color: var(--gold-soft); color: var(--heading); }
+.svu-chip.is-active { background: linear-gradient(135deg, var(--accent), var(--gold)); color: #fff; border-color: transparent; }
+
+.svu-gallery__grid {
+    columns: 4 240px; column-gap: 1.1rem;
+}
+.svu-tile {
+    position: relative; break-inside: avoid; margin-bottom: 1.1rem; border-radius: 14px;
+    overflow: hidden; cursor: pointer; border: 1px solid var(--border);
+    box-shadow: var(--shadow); background: var(--surface-2);
+}
+.svu-tile img { width: 100%; display: block; transition: transform .5s ease; }
+.svu-tile:hover img { transform: scale(1.08); }
+.svu-tile__overlay {
+    position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 1rem;
+    background: linear-gradient(to top, rgba(94,22,22,.82), rgba(94,22,22,.05) 55%, transparent);
+    opacity: 0; transition: opacity .3s ease; color: #fff;
+}
+.svu-tile:hover .svu-tile__overlay { opacity: 1; }
+.svu-tile__cat { font-family: var(--font-primary); font-weight: 600; font-size: .9rem; letter-spacing: .04em; }
+.svu-tile__zoom {
+    position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(0,0,0,.45); color: #fff; display: grid; place-items: center; font-size: 1rem;
+    opacity: 0; transform: scale(.7); transition: all .3s ease; backdrop-filter: blur(3px);
+}
+.svu-tile:hover .svu-tile__zoom { opacity: 1; transform: scale(1); }
+
+/* Lightbox */
+.svu-lightbox {
+    position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,.92);
+    display: flex; align-items: center; justify-content: center; padding: 2rem;
+}
+.svu-lightbox__img { max-width: min(1000px, 92vw); max-height: 82vh; object-fit: contain; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+.svu-lightbox__btn {
+    position: absolute; top: 50%; transform: translateY(-50%); width: 52px; height: 52px;
+    border-radius: 50%; border: 1px solid rgba(255,255,255,.4); background: rgba(0,0,0,.4);
+    color: #fff; font-size: 1.8rem; cursor: pointer; display: grid; place-items: center; backdrop-filter: blur(4px);
+}
+.svu-lightbox__btn:hover { background: rgba(228,128,42,.7); }
+.svu-lightbox__prev { left: 3vw; }
+.svu-lightbox__next { right: 3vw; }
+.svu-lightbox__close { position: absolute; top: 3vh; right: 3vw; width: 44px; height: 44px; border-radius: 50%; border: none; background: rgba(255,255,255,.15); color: #fff; font-size: 1.3rem; cursor: pointer; }
+.svu-lightbox__count { position: absolute; bottom: 3vh; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,.85); font-family: var(--font-primary); letter-spacing: .1em; }
+
+@media (max-width: 620px) {
+    .svu-gallery__grid { columns: 2 140px; column-gap: .7rem; }
+    .svu-tile { margin-bottom: .7rem; }
+    .svu-lightbox__btn { width: 42px; height: 42px; font-size: 1.4rem; }
+}
 
 /* ---- Responsive breakpoints --------------------------------------------- */
 @media (max-width: 900px) {
@@ -221,7 +292,6 @@ body.light-theme,
     body { font-size: 17px; }
     .section, section { padding-left: 1.1rem !important; padding-right: 1.1rem !important; }
     .svu-hero { padding: 100px 1.1rem 50px; }
-    .svu-hero__tagline { font-size: 1.15rem; }
     .svu-stats { flex-wrap: wrap; gap: 1rem 1.5rem; }
 }
 @media (max-width: 480px) {
@@ -229,8 +299,6 @@ body.light-theme,
     .svu-hero__om { font-size: 3.4rem; }
     .svu-stats__num { font-size: 1.6rem; }
 }
-
-/* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
     * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
