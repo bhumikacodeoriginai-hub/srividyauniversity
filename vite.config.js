@@ -1,11 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// The site is deployed to GitHub Pages under /srividyauniversity/.
-// `base` makes all built asset URLs resolve correctly on that sub-path.
-// If you later deploy at a domain root (e.g. Netlify/Vercel), set base to '/'.
+// Base path is configurable so the SAME code works on any host:
+//   • Vercel / Netlify / custom domain (served at root)  -> base "/" (default)
+//   • GitHub Pages project site (served at /srividyauniversity/) -> set VITE_BASE
+// The GitHub Pages workflow sets VITE_BASE=/srividyauniversity/ during build.
+const base = process.env.VITE_BASE || '/'
+
 export default defineConfig({
-  base: '/srividyauniversity/',
+  base,
   plugins: [react()],
   server: {
     port: 3000,

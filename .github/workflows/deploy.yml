@@ -35,6 +35,9 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          # GitHub Pages serves this project under /srividyauniversity/
+          VITE_BASE: /srividyauniversity/
 
       # Single-page-app fallback: serve index.html for any deep link / refresh
       - name: Add SPA 404 fallback
