@@ -1,226 +1,98 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
+import { asset } from '../utils/asset';
 
 const Signup = () => {
-  const { isDarkMode } = useTheme();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPwd, setShowPwd] = useState(false);
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    if (name && email && password && confirmPassword) {
-      if (password === confirmPassword) {
+    const handleSignup = (e) => {
+        e.preventDefault();
+        if (!name || !email || !password || !confirmPassword) {
+            setError('Please fill in all fields.');
+            return;
+        }
+        if (password.length < 6) {
+            setError('Password must be at least 6 characters.');
+            return;
+        }
+        if (password !== confirmPassword) {
+            setError('Passwords do not match.');
+            return;
+        }
+        setError('');
         navigate('/login');
-      } else {
-        setError('Passwords do not match');
-      }
-    } else {
-      setError('Please fill all fields');
-    }
-  };
+    };
 
-  return (
-    <div style={{
-      minHeight: '100vh',
-      padding: '100px 2rem 60px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: isDarkMode
-        ? 'radial-gradient(ellipse at center, #1a0a00 0%, #0a0500 100%)'
-        : 'radial-gradient(ellipse at center, #f5f0eb 0%, #e8e0d5 100%)'
-    }}>
-      <div style={{
-        background: isDarkMode
-          ? 'rgba(255,248,231,0.05)'
-          : 'rgba(255,248,231,0.8)',
-        border: `1px solid ${isDarkMode ? 'rgba(197,160,89,0.2)' : 'rgba(0,0,0,0.1)'}`,
-        borderRadius: '20px',
-        padding: '3rem',
-        maxWidth: '400px',
-        width: '100%'
-      }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <span style={{ fontSize: '3rem' }}>🕉</span>
-          <h2 style={{
-            fontFamily: "'Times New Roman', Times, serif",
-            color: isDarkMode ? '#C5A059' : '#8B6914',
-            fontSize: '2rem',
-            marginTop: '0.5rem',
-            fontWeight: 700
-          }}>Create Account</h2>
-          <p style={{
-            fontFamily: "'Times New Roman', Times, serif",
-            color: isDarkMode ? 'rgba(255,248,231,0.6)' : 'rgba(0,0,0,0.6)'
-          }}>Join Srividya University</p>
+    return (
+        <div className="svu-auth">
+            <div className="svu-auth__card" data-aos="zoom-in">
+                {/* Decorative side */}
+                <aside className="svu-auth__aside">
+                    <span className="svu-auth__om">ॐ</span>
+                    <h2>Join Srividya</h2>
+                    <p>Create your account to begin learning the timeless traditions of Vedic science.</p>
+                    <div className="svu-auth__line"></div>
+                    <ul>
+                        <li>Veda, Agama &amp; Jyothisha</li>
+                        <li>Music, Dance &amp; Yoga</li>
+                        <li>Accredited programmes</li>
+                    </ul>
+                </aside>
+
+                {/* Form */}
+                <div className="svu-auth__form">
+                    <div className="svu-auth__brand">
+                        <img src={asset('/images/logo.webp')} alt="Srividya University logo" />
+                        <span>Srividya University</span>
+                    </div>
+                    <h1 className="svu-auth__title">Create your account</h1>
+                    <p className="svu-auth__sub">Join our community of learners and scholars.</p>
+
+                    {error && <div className="svu-auth__error">{error}</div>}
+
+                    <form onSubmit={handleSignup} noValidate>
+                        <div className="svu-field">
+                            <label className="svu-label" htmlFor="su-name">Full Name</label>
+                            <input id="su-name" className="svu-input" type="text" value={name}
+                                onChange={(e) => setName(e.target.value)} placeholder="Your full name" autoComplete="name" />
+                        </div>
+
+                        <div className="svu-field">
+                            <label className="svu-label" htmlFor="su-email">Email Address</label>
+                            <input id="su-email" className="svu-input" type="email" value={email}
+                                onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" autoComplete="email" />
+                        </div>
+
+                        <div className="svu-field">
+                            <label className="svu-label" htmlFor="su-pwd">Password</label>
+                            <div className="svu-input-wrap">
+                                <input id="su-pwd" className="svu-input svu-input--pwd" type={showPwd ? 'text' : 'password'}
+                                    value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 6 characters" autoComplete="new-password" />
+                                <button type="button" className="svu-eye" aria-label={showPwd ? 'Hide password' : 'Show password'}
+                                    onClick={() => setShowPwd((v) => !v)}>{showPwd ? '🙈' : '👁'}</button>
+                            </div>
+                        </div>
+
+                        <div className="svu-field">
+                            <label className="svu-label" htmlFor="su-cpwd">Confirm Password</label>
+                            <input id="su-cpwd" className="svu-input" type={showPwd ? 'text' : 'password'}
+                                value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Re-enter your password" autoComplete="new-password" />
+                        </div>
+
+                        <button type="submit" className="svu-btn svu-btn--primary" style={{ width: '100%' }}>Create Account</button>
+                    </form>
+
+                    <p className="svu-auth__switch">Already have an account? <Link to="/login">Login</Link></p>
+                </div>
+            </div>
         </div>
-
-        {error && (
-          <div style={{
-            background: isDarkMode ? 'rgba(227,66,52,0.1)' : 'rgba(227,66,52,0.1)',
-            border: '1px solid #E34234',
-            color: '#E34234',
-            padding: '0.8rem',
-            borderRadius: '10px',
-            marginBottom: '1rem',
-            textAlign: 'center',
-            fontFamily: "'Times New Roman', Times, serif"
-          }}>
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <div>
-            <label style={{
-              fontFamily: "'Times New Roman', Times, serif",
-              color: isDarkMode ? 'rgba(255,248,231,0.7)' : 'rgba(0,0,0,0.7)',
-              fontSize: '0.9rem',
-              display: 'block',
-              marginBottom: '0.3rem'
-            }}>
-              👤 Full Name
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your full name"
-              style={{
-                width: '100%',
-                padding: '0.8rem',
-                background: isDarkMode ? 'rgba(255,248,231,0.05)' : 'rgba(255,255,255,0.9)',
-                border: `1px solid ${isDarkMode ? 'rgba(197,160,89,0.2)' : 'rgba(0,0,0,0.15)'}`,
-                borderRadius: '10px',
-                color: isDarkMode ? '#fff8e7' : '#1a0a00',
-                outline: 'none',
-                fontSize: '1rem',
-                fontFamily: "'Times New Roman', Times, serif"
-              }}
-            />
-          </div>
-
-          <div>
-            <label style={{
-              fontFamily: "'Times New Roman', Times, serif",
-              color: isDarkMode ? 'rgba(255,248,231,0.7)' : 'rgba(0,0,0,0.7)',
-              fontSize: '0.9rem',
-              display: 'block',
-              marginBottom: '0.3rem'
-            }}>
-              📧 Email Address
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              style={{
-                width: '100%',
-                padding: '0.8rem',
-                background: isDarkMode ? 'rgba(255,248,231,0.05)' : 'rgba(255,255,255,0.9)',
-                border: `1px solid ${isDarkMode ? 'rgba(197,160,89,0.2)' : 'rgba(0,0,0,0.15)'}`,
-                borderRadius: '10px',
-                color: isDarkMode ? '#fff8e7' : '#1a0a00',
-                outline: 'none',
-                fontSize: '1rem',
-                fontFamily: "'Times New Roman', Times, serif"
-              }}
-            />
-          </div>
-
-          <div>
-            <label style={{
-              fontFamily: "'Times New Roman', Times, serif",
-              color: isDarkMode ? 'rgba(255,248,231,0.7)' : 'rgba(0,0,0,0.7)',
-              fontSize: '0.9rem',
-              display: 'block',
-              marginBottom: '0.3rem'
-            }}>
-              🔒 Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Create a password"
-              style={{
-                width: '100%',
-                padding: '0.8rem',
-                background: isDarkMode ? 'rgba(255,248,231,0.05)' : 'rgba(255,255,255,0.9)',
-                border: `1px solid ${isDarkMode ? 'rgba(197,160,89,0.2)' : 'rgba(0,0,0,0.15)'}`,
-                borderRadius: '10px',
-                color: isDarkMode ? '#fff8e7' : '#1a0a00',
-                outline: 'none',
-                fontSize: '1rem',
-                fontFamily: "'Times New Roman', Times, serif"
-              }}
-            />
-          </div>
-
-          <div>
-            <label style={{
-              fontFamily: "'Times New Roman', Times, serif",
-              color: isDarkMode ? 'rgba(255,248,231,0.7)' : 'rgba(0,0,0,0.7)',
-              fontSize: '0.9rem',
-              display: 'block',
-              marginBottom: '0.3rem'
-            }}>
-              🔒 Confirm Password
-            </label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm your password"
-              style={{
-                width: '100%',
-                padding: '0.8rem',
-                background: isDarkMode ? 'rgba(255,248,231,0.05)' : 'rgba(255,255,255,0.9)',
-                border: `1px solid ${isDarkMode ? 'rgba(197,160,89,0.2)' : 'rgba(0,0,0,0.15)'}`,
-                borderRadius: '10px',
-                color: isDarkMode ? '#fff8e7' : '#1a0a00',
-                outline: 'none',
-                fontSize: '1rem',
-                fontFamily: "'Times New Roman', Times, serif"
-              }}
-            />
-          </div>
-
-          <button
-            type="submit"
-            style={{
-              padding: '0.8rem',
-              background: 'linear-gradient(135deg, #FF9933, #C5A059)',
-              border: 'none',
-              borderRadius: '10px',
-              color: 'white',
-              fontSize: '1rem',
-              fontWeight: 600,
-              cursor: 'pointer',
-              fontFamily: "'Times New Roman', Times, serif"
-            }}
-          >
-            📝 Create Account
-          </button>
-        </form>
-
-        <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
-          <p style={{
-            fontFamily: "'Times New Roman', Times, serif",
-            color: isDarkMode ? 'rgba(255,248,231,0.6)' : 'rgba(0,0,0,0.6)'
-          }}>
-            Already have account? <Link to="/login" style={{ color: isDarkMode ? '#C5A059' : '#8B6914', textDecoration: 'none', fontFamily: "'Times New Roman', Times, serif" }}>Login</Link>
-          </p>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Signup;
