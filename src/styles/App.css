@@ -3,8 +3,7 @@
 @import './animations.css';
 
 * {
-    font-family: 'Times New Roman', Times, serif !important;
-    font-style: normal !important;
+    font-style: normal;
 }
 
 .app {

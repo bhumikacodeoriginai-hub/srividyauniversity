@@ -1,23 +1,41 @@
 :root {
-    --saffron: #FF9933;
-    --gold: #C5A059;
-    --vermilion: #E34234;
-    --cream: #FFF8E7;
+    /* ===== Traditional palette ===== */
+    --saffron: #E4802A;      /* warm saffron */
+    --saffron-bright: #FF9933;
+    --gold: #B8860B;         /* antique gold */
+    --gold-soft: #C5A059;
+    --maroon: #7A1F1F;       /* deep temple maroon (primary) */
+    --maroon-deep: #5E1616;
+    --vermilion: #C0392B;
+    --cream: #FBF6EA;        /* ivory / paper */
+    --cream-2: #F3EAD6;
+    --paper: #FFFDF7;
+    --ink: #2A1A10;          /* warm dark brown text */
+    --ink-soft: #5C4634;     /* muted text */
+    --line: #E4D8BE;         /* soft gold-tinted border */
+
     --dark-brown: #3D1F00;
     --turquoise: #40E0D0;
     --purple: #9B59B6;
     --green: #2ECC71;
 
-    --gradient-primary: linear-gradient(135deg, #FF9933, #C5A059);
+    --gradient-primary: linear-gradient(135deg, #E4802A, #B8860B);
+    --gradient-maroon: linear-gradient(135deg, #7A1F1F, #5E1616);
+    --gradient-gold: linear-gradient(135deg, #C5A059, #B8860B);
     --gradient-dark: linear-gradient(135deg, #1a0a00, #0a0500);
 
-    --font-primary: 'Times New Roman', Times, serif;
+    /* ===== Typography ===== */
+    --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --font-primary: 'EB Garamond', Georgia, 'Times New Roman', serif;
     --font-sanskrit: 'Tiro Devanagari Sanskrit', serif;
-    --font-kalam: 'Times New Roman', Times, serif;  /* alias kept for legacy refs */
-    --font-body: 'Times New Roman', Times, serif;
+    --font-kalam: 'EB Garamond', Georgia, serif;   /* alias kept for legacy refs */
+    --font-body: 'EB Garamond', Georgia, 'Times New Roman', serif;
 
+    /* ===== Layout ===== */
     --section-padding: 120px 2rem 80px;
     --container-max: 1200px;
-    --radius-card: 20px;
+    --radius-card: 16px;
     --radius-button: 50px;
+    --shadow-soft: 0 10px 30px rgba(94, 22, 22, 0.10);
+    --shadow-card: 0 6px 22px rgba(42, 26, 16, 0.10);
 }
