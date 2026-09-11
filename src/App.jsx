@@ -35,6 +35,7 @@ import Hero3D from './components/3D/Hero3D';
 import './styles/App.css';
 import './styles/animations.css';
 import './styles/traditional.css'; // traditional theme — loaded last so it wins
+import './styles/motion.css';      // tasteful animation layer
 
 const AppContent = () => {
     const location = useLocation();

@@ -1,5 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { asset } from '../../utils/asset';
+
+/* Small count-up number that animates when scrolled into view */
+const Counter = ({ end, suffix = '', duration = 1400 }) => {
+    const [val, setVal] = useState(0);
+    const ref = useRef(null);
+    const done = useRef(false);
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting && !done.current) {
+                    done.current = true;
+                    const start = performance.now();
+                    const step = (now) => {
+                        const t = Math.min((now - start) / duration, 1);
+                        const eased = 1 - Math.pow(1 - t, 3);
+                        setVal(Math.round(eased * end));
+                        if (t < 1) requestAnimationFrame(step);
+                    };
+                    requestAnimationFrame(step);
+                }
+            });
+        }, { threshold: 0.4 });
+        io.observe(el);
+        return () => io.disconnect();
+    }, [end, duration]);
+    return <span ref={ref} className="svu-stats__num">{val}{suffix}</span>;
+};
 
 const HomeSection = () => {
     const navigate = useNavigate();
@@ -9,15 +39,14 @@ const HomeSection = () => {
 
     const handleApplyNow = () => window.open(GOOGLE_FORM_URL, '_blank');
 
-    // Vedic Science related slides
+    // Real photographs from the University (public/images)
     const slides = [
-        { src: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1200&h=400&fit=crop', title: 'Veda', subtitle: 'The eternal wisdom of the ancient scriptures' },
-        { src: 'https://images.unsplash.com/photo-1609619385002-f40f1df9b7eb?w=1200&h=400&fit=crop', title: 'Agama', subtitle: 'Temple rituals and sacred traditions' },
-        { src: 'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=1200&h=400&fit=crop', title: 'Tantra', subtitle: 'Ancient practices of spiritual energy' },
-        { src: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=1200&h=400&fit=crop', title: 'Shastra', subtitle: 'Traditional sciences and texts' },
-        { src: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1200&h=400&fit=crop', title: 'Jyothisham', subtitle: 'The science of light and time' },
-        { src: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1200&h=400&fit=crop', title: 'Performing Arts', subtitle: 'Music, dance and dramatic traditions' },
-        { src: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&h=400&fit=crop', title: 'Yogic Science', subtitle: 'Harmony of body, mind and spirit' }
+        { src: '/images/IMG-20230609-WA0016.jpg', title: 'Convocation 2023', subtitle: 'Celebrating our doctoral graduates' },
+        { src: '/images/DSC_0059.jpg', title: 'Academic Ceremonies', subtitle: 'Honouring scholarship and tradition' },
+        { src: '/images/20200105_140802.jpg', title: 'Cultural Programmes', subtitle: 'Music, dance and the performing arts' },
+        { src: '/images/IMG-20170612-WA0079.jpg', title: 'Workshops & Lectures', subtitle: 'Learning from eminent scholars' },
+        { src: '/images/DSC_0175.jpg', title: 'Life on Campus', subtitle: 'A vibrant community of learners' },
+        { src: '/images/IMG-20230609-WA0030.jpg', title: 'Preserving Tradition', subtitle: 'Vedic knowledge for a new generation' }
     ];
 
     useEffect(() => {
@@ -59,11 +88,11 @@ const HomeSection = () => {
 
                         {/* Stats */}
                         <div className="svu-stats">
-                            <div><div className="svu-stats__num">10+</div><div className="svu-stats__label">Years</div></div>
+                            <div><Counter end={10} suffix="+" /><div className="svu-stats__label">Years</div></div>
                             <div className="svu-stats__sep"></div>
-                            <div><div className="svu-stats__num">25+</div><div className="svu-stats__label">Doctoral Graduates</div></div>
+                            <div><Counter end={25} suffix="+" /><div className="svu-stats__label">Doctoral Graduates</div></div>
                             <div className="svu-stats__sep"></div>
-                            <div><div className="svu-stats__num">3</div><div className="svu-stats__label">Convocations</div></div>
+                            <div><Counter end={3} /><div className="svu-stats__label">Convocations</div></div>
                         </div>
 
                         {/* Buttons */}
@@ -95,10 +124,11 @@ const HomeSection = () => {
                 }}>
                     <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
                         <img
-                            src={slides[currentSlide].src}
+                            key={currentSlide}
+                            src={asset(slides[currentSlide].src)}
                             alt={slides[currentSlide].title}
                             onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.style.background = 'linear-gradient(135deg, #E4802A, #7A1F1F)'; }}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity .5s ease' }}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', animation: 'svuFadeIn .8s ease' }}
                         />
                         <div className="svu-on-dark" style={{
                             position: 'absolute', bottom: 0, left: 0, right: 0,
