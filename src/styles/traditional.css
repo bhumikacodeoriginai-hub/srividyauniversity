@@ -78,6 +78,41 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4,
 /* Text that genuinely sits on a dark overlay/panel stays light in both themes */
 .svu-on-dark, .svu-on-dark * { color: #fff !important; -webkit-text-fill-color: #fff !important; }
 
+/* ----------------------------------------------------------------------------
+   SECTION CARD UPGRADE
+   Every section hard-codes near-transparent "cards" (rgba(255,248,231,0.03/.05))
+   with faint gold borders — flat and odd-looking in both themes. Promote those
+   inline patterns to real themed surfaces with visible borders + soft shadow,
+   and a gentle lift on hover. Covers both spaced and un-spaced serialisations.
+   ---------------------------------------------------------------------------- */
+[style*="rgba(255, 248, 231, 0.03)"],
+[style*="rgba(255,248,231,0.03)"],
+[style*="rgba(255, 248, 231, 0.05)"],
+[style*="rgba(255,248,231,0.05)"] {
+    background: var(--surface) !important;
+    border-color: var(--border) !important;
+    box-shadow: var(--shadow);
+    border-radius: 14px;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+[style*="rgba(255, 248, 231, 0.03)"]:hover,
+[style*="rgba(255,248,231,0.03)"]:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: color-mix(in srgb, var(--gold-soft) 60%, transparent) !important;
+}
+/* Faint gold borders used throughout -> crisp themed border */
+[style*="rgba(197, 160, 89, 0.1)"],
+[style*="rgba(197,160,89,0.1)"],
+[style*="rgba(197, 160, 89, 0.15)"],
+[style*="rgba(197,160,89,0.15)"],
+[style*="rgba(197, 160, 89, 0.05)"],
+[style*="rgba(197,160,89,0.05)"] {
+    border-color: var(--border) !important;
+}
+/* Section eyebrow (Sanskrit) + subtitle spacing polish applied via markup colors */
+section > div > div[style*="text-align: center"] h2 { letter-spacing: .5px; }
+
 /* ---- Section rhythm & headers ------------------------------------------- */
 .section, section { min-height: auto; }
 .section-header p { font-size: 1.15rem; color: var(--text-soft) !important; }
@@ -301,4 +336,42 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4,
 }
 @media (prefers-reduced-motion: reduce) {
     * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+
+
+/* ============================================================================
+   FOOTER (traditional, theme-aware)
+   ============================================================================ */
+.svu-footer {
+    margin-top: 3rem;
+    background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--heading) 8%, var(--surface)));
+    border-top: 3px solid var(--gold);
+    color: var(--text);
+}
+body.dark-theme .svu-footer { background: linear-gradient(180deg, #140c07, #0b0603); }
+.svu-footer__inner {
+    max-width: 1200px; margin: 0 auto; padding: 3rem 2rem 1.6rem;
+    display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.4fr; gap: 2.2rem;
+}
+.svu-footer__logo { display: flex; align-items: center; gap: .8rem; }
+.svu-footer__logo img { width: 52px; height: 52px; object-fit: contain; }
+.svu-footer__name { display: block; font-family: var(--font-display) !important; color: var(--heading); font-size: 1.3rem; font-weight: 700; }
+.svu-footer__tag { display: block; color: var(--text-soft); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
+.svu-footer__mission { color: var(--text-soft); margin: 1rem 0 .8rem; max-width: 42ch; }
+.svu-footer__om { font-family: var(--font-sanskrit); color: var(--accent); font-size: 1.15rem; }
+.svu-footer__col h4 { font-family: var(--font-display) !important; color: var(--heading); font-size: 1.1rem; margin-bottom: .9rem; }
+.svu-footer__col a, .svu-footer__col p { display: block; color: var(--text-soft); text-decoration: none; margin: .35rem 0; font-size: .96rem; transition: color .2s ease; }
+.svu-footer__col a:hover { color: var(--accent); }
+.svu-footer__bar {
+    max-width: 1200px; margin: 0 auto; padding: 1.2rem 2rem;
+    border-top: 1px solid var(--border); display: flex; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap; color: var(--text-soft); font-size: .85rem;
+}
+@media (max-width: 860px) {
+    .svu-footer__inner { grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+    .svu-footer__brand { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+    .svu-footer__inner { grid-template-columns: 1fr; }
+    .svu-footer__bar { justify-content: center; text-align: center; }
 }
