@@ -133,40 +133,36 @@ const HomeSection = () => {
                     </div>
                 </div>
 
-                {/* Image slider */}
-                <div data-aos="fade-up" style={{
-                    marginTop: '3rem', position: 'relative', borderRadius: '18px', overflow: 'hidden',
-                    border: '1px solid var(--line)', boxShadow: '0 18px 44px rgba(94,22,22,.15)', height: '420px'
-                }}>
-                    <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
-                        <img
-                            key={currentSlide}
-                            src={asset(slides[currentSlide].src)}
-                            alt={slides[currentSlide].title}
-                            onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.style.background = 'linear-gradient(135deg, #E4802A, #7A1F1F)'; }}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', animation: 'svuFadeIn .8s ease' }}
-                        />
-                        <div className="svu-on-dark" style={{
-                            position: 'absolute', bottom: 0, left: 0, right: 0,
-                            background: 'linear-gradient(to top, rgba(0,0,0,0.85), transparent)',
-                            padding: '2.2rem', textAlign: 'center'
-                        }}>
-                            <h3 style={{ fontSize: '2.1rem', fontWeight: 700, color: '#fff', marginBottom: '.3rem', textShadow: '0 2px 10px rgba(0,0,0,.5)' }}>
-                                {slides[currentSlide].title}
-                            </h3>
-                            <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,.92)', fontStyle: 'italic', margin: 0 }}>
-                                {slides[currentSlide].subtitle}
-                            </p>
-                        </div>
+                {/* Image slider — full photo shown (contain) over a blurred fill */}
+                <div data-aos="fade-up" className="svu-slider">
+                    {/* Blurred backdrop fills the frame so any photo shape looks good */}
+                    <img
+                        key={`bg-${currentSlide}`}
+                        className="svu-slider__bg"
+                        src={asset(slides[currentSlide].src)}
+                        alt=""
+                        aria-hidden="true"
+                    />
+                    {/* Foreground photo — always fully visible, never cropped */}
+                    <img
+                        key={currentSlide}
+                        className="svu-slider__img"
+                        src={asset(slides[currentSlide].src)}
+                        alt={slides[currentSlide].title}
+                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                    />
+                    <div className="svu-on-dark svu-slider__caption">
+                        <h3>{slides[currentSlide].title}</h3>
+                        <p>{slides[currentSlide].subtitle}</p>
                     </div>
 
                     <button onClick={prevSlide} aria-label="Previous slide" style={sliderBtn('left')}>&#8249;</button>
                     <button onClick={nextSlide} aria-label="Next slide" style={sliderBtn('right')}>&#8250;</button>
 
-                    <div style={{ position: 'absolute', bottom: '15px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px', zIndex: 10 }}>
+                    <div className="svu-slider__dots">
                         {slides.map((_, i) => (
                             <button key={i} onClick={() => setCurrentSlide(i)} aria-label={`Go to slide ${i + 1}`}
-                                style={{ width: currentSlide === i ? '28px' : '10px', height: '10px', borderRadius: '5px', background: currentSlide === i ? '#fff' : 'rgba(255,255,255,.55)', border: 'none', cursor: 'pointer', transition: 'all .3s ease' }} />
+                                className={currentSlide === i ? 'is-active' : ''} />
                         ))}
                     </div>
                 </div>

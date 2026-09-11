@@ -581,3 +581,36 @@ body.dark-theme  ::-webkit-scrollbar-thumb { background: linear-gradient(180deg,
 
 /* Slightly tighter section headers on the inline-styled sections */
 section > div > div[style*="text-align"] { margin-bottom: 2.4rem !important; }
+
+
+/* ============================================================================
+   HERO IMAGE SLIDER — show the WHOLE photo (contain) over a blurred fill,
+   so portrait / landscape event photos are never cropped or squashed.
+   ============================================================================ */
+.svu-slider {
+    margin-top: 3rem; position: relative; border-radius: 18px; overflow: hidden;
+    border: 1px solid var(--border); box-shadow: 0 18px 44px rgba(94, 22, 22, .15);
+    height: clamp(260px, 46vw, 460px); background: #1a1008;
+}
+.svu-slider__bg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; transform: scale(1.15);
+    filter: blur(22px) brightness(.55) saturate(1.1);
+    animation: svuFadeIn .8s ease;
+}
+.svu-slider__img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: contain;            /* <-- whole photo visible, proper size */
+    object-position: center; z-index: 1; animation: svuFadeIn .8s ease;
+}
+.svu-slider__caption {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+    background: linear-gradient(to top, rgba(0,0,0,.82), rgba(0,0,0,.15) 60%, transparent);
+    padding: 2.4rem 2rem 1.6rem; text-align: center;
+}
+.svu-slider__caption h3 { font-size: clamp(1.4rem, 3.6vw, 2.1rem); font-weight: 700; color: #fff !important; -webkit-text-fill-color:#fff !important; margin-bottom: .25rem; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+.svu-slider__caption p { font-size: 1.02rem; color: rgba(255,255,255,.92); font-style: italic; margin: 0; }
+.svu-slider__dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 3; }
+.svu-slider__dots button { width: 10px; height: 10px; border-radius: 5px; background: rgba(255,255,255,.55); border: none; cursor: pointer; transition: all .3s ease; }
+.svu-slider__dots button.is-active { width: 28px; background: #fff; }
+@media (max-width: 560px) { .svu-slider__caption { padding: 1.6rem 1rem 1.4rem; } }
