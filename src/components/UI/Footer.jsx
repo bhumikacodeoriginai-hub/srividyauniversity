@@ -47,6 +47,13 @@ const Footer = () => {
                 </div>
             </div>
 
+            <div className="svu-footer__credit">
+                <span>Designed &amp; Developed by</span>
+                <a href="https://codeorigin.ai" target="_blank" rel="noreferrer" className="svu-footer__credit-name">
+                    Code&nbsp;Origin.AI Private Limited
+                </a>
+            </div>
+
             <div className="svu-footer__bar">
                 <span>&copy; {year} Srividya International University for Vedic Science. All rights reserved.</span>
                 <span>Knowledge &middot; Wisdom &middot; Service</span>
