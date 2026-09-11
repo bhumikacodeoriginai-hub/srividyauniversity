@@ -127,7 +127,9 @@ function App() {
     }, []);
 
     return (
-        <Router>
+        // basename keeps client-side routes working when the app is served
+        // from a sub-path (e.g. GitHub Pages: /srividyauniversity/).
+        <Router basename={import.meta.env.BASE_URL}>
             <ThemeProvider>
                 <AppContent />
             </ThemeProvider>

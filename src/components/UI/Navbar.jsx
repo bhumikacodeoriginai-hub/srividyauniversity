@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import { useTheme } from '../../context/ThemeContext';
+import { asset } from '../../utils/asset';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -53,7 +54,7 @@ const Navbar = () => {
                 }}
             >
                 <img
-                    src="/images/logo.webp"
+                    src={asset("/images/logo.webp")}
                     alt="Srividya University Logo"
                     style={{
                         width: '50px',

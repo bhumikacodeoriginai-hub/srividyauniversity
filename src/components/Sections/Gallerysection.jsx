@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
+import { asset } from '../../utils/asset';
 
 const GallerySection = () => {
     const { isDarkMode } = useTheme();
@@ -221,7 +222,7 @@ const GallerySection = () => {
                             }}
                         >
                             <img
-                                src={image.src}
+                                src={asset(image.src)}
                                 alt={image.title || image.category}
                                 loading="lazy"
                                 style={{
@@ -301,7 +302,7 @@ const GallerySection = () => {
                             </button>
 
                             <img
-                                src={selectedImage.src}
+                                src={asset(selectedImage.src)}
                                 alt={selectedImage.title || selectedImage.category}
                                 style={{
                                     width: '100%',
